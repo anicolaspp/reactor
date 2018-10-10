@@ -14,6 +14,7 @@ src_managed/
 .scala_dependencies
 .worksheet
 
+*/.idea
 .idea/
 src/main/java/
 src/main/scala-2.11/

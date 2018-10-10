@@ -6,4 +6,4 @@ The links that are randomly generated are written to **MapR Streams**.
 
 This application can be executed anywhere where the JVM is available. 
 
-![](./c-gen.jpg)
+![](./c-gen.jpg) 

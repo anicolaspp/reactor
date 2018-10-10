@@ -19,5 +19,8 @@
         <module name="clicksimulator" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="clicksimulator" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

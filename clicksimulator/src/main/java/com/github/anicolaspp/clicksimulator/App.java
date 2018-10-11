@@ -20,6 +20,7 @@ public class App {
     
     private static String TOPIC = "/user/mapr/streams/click_stream:all_links";
     
+    // ONLY FOR MY RUNNING LOCALLY (DON'T USE IN PRODUCTION)
     private static ExecutorService executorService = Executors.newWorkStealingPool(10);
     
     public static void main(String[] args) {
@@ -49,7 +50,16 @@ public class App {
     private static Function<ProducerRecord<String, String>, CompletableFuture<Void>> sendRecord(
             KafkaProducer<String, String> producer) {
         
-        return record -> CompletableFuture.runAsync(() -> sendRecord(producer, record), executorService);
+        return record -> CompletableFuture.runAsync(() -> {
+            System.out.println("sending: " + record.value());
+            
+            try {
+                producer.send(record).get();
+                
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }, executorService);
     }
     
     private static Integer getNumberOfLinks(String[] args) {
@@ -65,17 +75,6 @@ public class App {
                 .path(link.value)
                 .isHot(link.isHot)
                 .build();
-    }
-    
-    private static void sendRecord(KafkaProducer<String, String> producer, ProducerRecord<String, String> record) {
-        System.out.println("sending: " + record.value());
-        
-        try {
-            producer.send(record).get();
-            
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
     }
     
     private static Optional<ProducerRecord<String, String>> getProducerRecord(LinkMessage linkMessage) {

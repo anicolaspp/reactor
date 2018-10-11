@@ -18,10 +18,12 @@ public class App {
     private static String TOPIC = "/user/mapr/streams/click_stream:all_links";
     
     public static void main(String[] args) {
+    
+        System.out.println("running...");
         
         val numberOfLinks = getNumberOfLinks(args);
         val producer = getProducer();
-        
+    
         val done = CompletableFuture.allOf(new Selector()
                 .getRandomLinksStream(new Respository())
                 .map(App::getLinkMessage)
@@ -31,10 +33,10 @@ public class App {
                 .limit(numberOfLinks)
                 .map(record -> CompletableFuture.runAsync(() -> sendRecord(producer, record)))
                 .toArray(CompletableFuture[]::new));
-        
+    
         done.join();
-        
-        System.out.println("running...");
+    
+        System.out.println("done....");
     }
     
     private static Integer getNumberOfLinks(String[] args) {
@@ -82,5 +84,4 @@ public class App {
         return new KafkaProducer<>(props);
     }
 }
-
 

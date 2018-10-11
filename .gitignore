@@ -1,6 +1,8 @@
 *.class
 *.log
 
+clicksimulator/.idea/
+
 # sbt specific
 .cache
 .history
@@ -19,6 +21,7 @@ src_managed/
 src/main/java/
 src/main/scala-2.11/
 clicksimulator/src/main/main.iml
+clicksimulator/.idea/workspace.xml
 clicksimulator/.idea/workspace.xml
 clicksimulator/.idea/workspace.xml
 clicksimulator/.idea/workspace.xml

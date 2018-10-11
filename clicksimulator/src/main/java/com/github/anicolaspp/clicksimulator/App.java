@@ -10,6 +10,9 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Function;
 
 public class App {
     
@@ -17,26 +20,36 @@ public class App {
     
     private static String TOPIC = "/user/mapr/streams/click_stream:all_links";
     
-    public static void main(String[] args) {
+    private static ExecutorService executorService = Executors.newWorkStealingPool(10);
     
+    public static void main(String[] args) {
+        
         System.out.println("running...");
         
         val numberOfLinks = getNumberOfLinks(args);
         val producer = getProducer();
-    
-        val done = CompletableFuture.allOf(new Selector()
-                .getRandomLinksStream(new Respository())
-                .map(App::getLinkMessage)
-                .map(App::getProducerRecord)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .limit(numberOfLinks)
-                .map(record -> CompletableFuture.runAsync(() -> sendRecord(producer, record)))
-                .toArray(CompletableFuture[]::new));
-    
+        
+        val done = CompletableFuture.allOf(
+                new Selector()
+                        .getRandomLinksStream(new Respository())
+                        .map(App::getLinkMessage)
+                        .map(App::getProducerRecord)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .limit(numberOfLinks)
+                        .map(sendRecord(producer))
+                        .toArray(CompletableFuture[]::new)
+        );
+        
         done.join();
-    
+        
         System.out.println("done....");
+    }
+    
+    private static Function<ProducerRecord<String, String>, CompletableFuture<Void>> sendRecord(
+            KafkaProducer<String, String> producer) {
+        
+        return record -> CompletableFuture.runAsync(() -> sendRecord(producer, record), executorService);
     }
     
     private static Integer getNumberOfLinks(String[] args) {
@@ -48,18 +61,18 @@ public class App {
     }
     
     private static LinkMessage getLinkMessage(Link link) {
-        return LinkMessage.builder().path(link.value).isHot(link.isHot).build();
+        return LinkMessage.builder()
+                .path(link.value)
+                .isHot(link.isHot)
+                .build();
     }
     
     private static void sendRecord(KafkaProducer<String, String> producer, ProducerRecord<String, String> record) {
         System.out.println("sending: " + record.value());
         
         try {
-            val meta = producer.send(record).get();
+            producer.send(record).get();
             
-            System.out.println(meta.topic());
-            System.out.println(meta.partition());
-            System.out.println(meta.offset());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -68,6 +81,7 @@ public class App {
     private static Optional<ProducerRecord<String, String>> getProducerRecord(LinkMessage linkMessage) {
         try {
             String jsonInString = MAPPER.writeValueAsString(linkMessage);
+            
             return Optional.of(new ProducerRecord<>(TOPIC, jsonInString));
         } catch (JsonProcessingException e) {
             return Optional.empty();

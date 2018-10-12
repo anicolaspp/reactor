@@ -12,12 +12,13 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 
 libraryDependencies ++= Seq(
   "org.apache.spark" % "spark-core_2.11" % "2.2.1" % "provided",
+  "org.apache.spark" % "spark-sql_2.11" % "2.2.1" % "provided",
   "org.apache.spark" % "spark-streaming_2.11" % "2.2.1" % "provided",
   "org.apache.spark" % "spark-streaming-kafka-0-9_2.11" % "2.0.1-mapr-1611",
   "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.7",
   "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.9.7",
   "com.typesafe.play" % "play-json_2.11" % "2.3.8",
-  "com.mapr.db" % "maprdb-spark" % "5.2.1-mapr"
+  "com.mapr.db" % "maprdb-spark" % "5.2.1-mapr" % "provided"
 )
 
 assemblyMergeStrategy in assembly := {

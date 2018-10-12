@@ -13,4 +13,4 @@ After this, the resultant assembly is ready to be submitted as an Spark Applicat
 
 By default, **Aggregator** reads from an *MapR Stream* called **/user/mapr/streams/click_stream:all_links** on the MapR Cluster and write to MapR table called **/user/mapr/tables/link_aggregates**.
 
-**Aggregator** is one of the many *View Materializer* on the [Reactor Sytem](../)
+**Aggregator** is one of the many *View Materializer* on the [Reactor Sytem](https://github.com/anicolaspp/reactor/)

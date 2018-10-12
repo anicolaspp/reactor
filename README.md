@@ -12,6 +12,6 @@
 
 **Reactor** is built as a compilation of different technologies interacting with each other. The following diagram shows a general overview of these interactions. 
 
-![](./reactor.PNG)
+![](./reactor.png)
 
 **Reactor** is built again *MapR 6.0.1*

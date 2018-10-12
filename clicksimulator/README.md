@@ -19,7 +19,7 @@ Generated links are written to the following `MapR Streams`.
 /user/mapr/streams/click_stream:all_links
 ```
 
-Make sure the stream was created before and the user running app has access to write on it. 
+Make sure the stream was created before and the user running the application has access to write on it. 
 
 Create the stream with the following command.
 

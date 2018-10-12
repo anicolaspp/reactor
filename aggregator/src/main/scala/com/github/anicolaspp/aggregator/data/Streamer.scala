@@ -1,4 +1,4 @@
-package com.github.anicolaspp.aggregator
+package com.github.anicolaspp.aggregator.data
 
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord}
 import org.apache.spark.streaming.StreamingContext

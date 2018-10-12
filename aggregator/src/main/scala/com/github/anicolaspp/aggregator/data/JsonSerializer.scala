@@ -1,4 +1,4 @@
-package com.github.anicolaspp.aggregator
+package com.github.anicolaspp.aggregator.data
 
 import play.api.libs.json.{Format, Json}
 

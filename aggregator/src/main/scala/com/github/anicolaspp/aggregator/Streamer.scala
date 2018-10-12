@@ -15,6 +15,7 @@ trait Streamer {
   private def kafkaParameters = Map(
     ConsumerConfig.GROUP_ID_CONFIG -> "aggregators",
     ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG -> "org.apache.kafka.common.serialization.StringDeserializer",
-    ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG -> "org.apache.kafka.common.serialization.StringDeserializer"
+    ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG -> "org.apache.kafka.common.serialization.StringDeserializer",
+    ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG -> "true"
   )
 }

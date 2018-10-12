@@ -2,7 +2,7 @@ package com.github.anicolaspp.aggregator
 
 import play.api.libs.json.{Format, Json}
 
-trait JsonSerializer {
+object JsonSerializer {
   private implicit val linkReads: Format[Link] = Json.format[Link]
 
   def toJson(t: (Link, Int)) =

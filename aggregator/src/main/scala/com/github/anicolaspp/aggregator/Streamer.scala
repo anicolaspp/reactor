@@ -6,11 +6,11 @@ import org.apache.spark.streaming.dstream.InputDStream
 import org.apache.spark.streaming.kafka09.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 
 trait Streamer {
-  def getMessagesStream()(implicit ssc: StreamingContext): InputDStream[ConsumerRecord[String, String]] =
-    KafkaUtils.createDirectStream(ssc, LocationStrategies.PreferConsistent, consumerStrategy)
+  def getStream(streamName: String)(implicit ssc: StreamingContext): InputDStream[ConsumerRecord[String, String]] =
+    KafkaUtils.createDirectStream(ssc, LocationStrategies.PreferConsistent, consumerStrategy(streamName))
 
-  private def consumerStrategy =
-    ConsumerStrategies.Subscribe[String, String](List("/user/mapr/streams/click_stream:all_links"), kafkaParameters)
+  private def consumerStrategy(streamName: String) =
+    ConsumerStrategies.Subscribe[String, String](List(streamName), kafkaParameters)
 
   private def kafkaParameters = Map(
     ConsumerConfig.GROUP_ID_CONFIG -> "aggregators",

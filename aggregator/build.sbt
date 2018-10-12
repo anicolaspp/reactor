@@ -18,7 +18,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.7",
   "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.9.7",
   "com.typesafe.play" % "play-json_2.11" % "2.3.8",
-  "com.mapr.db" % "maprdb-spark" % "5.2.1-mapr" % "provided"
+  "com.mapr.db" % "maprdb-spark" % "5.2.1-mapr" % "provided",
+  "com.github.scopt" %% "scopt" % "3.7.0"
 )
 
 assemblyMergeStrategy in assembly := {

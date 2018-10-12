@@ -3,7 +3,6 @@ package com.github.anicolaspp.aggregator
 import com.mapr.db.spark.MapRDBSpark
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.streaming.dstream.DStream
-import play.api.libs.json.Json
 
 object syntax {
 
@@ -18,16 +17,16 @@ object syntax {
     def countByLinkInWindow() =
       stream
         .map(link => (link.path, (1, link)))
-        .reduceByKey { case ((m, l), (n, _)) => (m + n, l) }
+        .reduceByKey(reduce)
         .map { case (_, (total, link)) => (link, total) }
 
+    private def reduce(x: (Int, Link), y: (Int, Link)) = (x._1 + y._1, x._2)
   }
 
   implicit class DStreamRawOps(stream: DStream[ConsumerRecord[String, String]]) extends JsonSerializer {
-
     def getLinks() =
       stream
-        .map(record => record.value)
-        .map(json => linkReads.reads(Json.parse(json)).asOpt.get)
+        .map(_.value)
+        .map(fromJson)
   }
 }

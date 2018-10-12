@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder(toBuilder = true)
-class Link {
+public class Link {
     String value;
     
     boolean isHot;

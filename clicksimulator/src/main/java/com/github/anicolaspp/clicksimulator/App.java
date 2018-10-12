@@ -21,7 +21,7 @@ public class App {
     private static String TOPIC = "/user/mapr/streams/click_stream:all_links";
     
     // ONLY FOR MY RUNNING LOCALLY (DON'T USE IN PRODUCTION)
-    private static ExecutorService executorService = Executors.newWorkStealingPool(10);
+    private static ExecutorService executorService = Executors.newWorkStealingPool(1);
     
     public static void main(String[] args) {
         
@@ -59,7 +59,7 @@ public class App {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-        }, executorService);
+        });
     }
     
     private static Integer getNumberOfLinks(String[] args) {

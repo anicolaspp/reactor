@@ -13,7 +13,7 @@ mvn package
 java -jar /Users/nperez/IdeaProjects/reactor/clicksimulator/target/clicksimulator-1.0.0-SNAPSHOT.jar
 ```
 
-Generated links are written to following `MapR Streams`. 
+Generated links are written to the following `MapR Streams`. 
 
 ```
 /user/mapr/streams/click_stream:all_links

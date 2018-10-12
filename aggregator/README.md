@@ -16,6 +16,6 @@ After this, the resultant assembly is ready to be submitted as an Spark Applicat
 spark-submit --class "com.github.anicolaspp.aggregator.App" --deploy-mode client aggregator-1.0.0.jar
 ```
 
-By default, **Aggregator** reads from a *MapR Stream* called **/user/mapr/streams/click_stream:all_links** on the *MapR Cluster* and writes to a MapR table called **/user/mapr/tables/link_aggregates**.
+By default, **Aggregator** reads from a *MapR Stream* called **/user/mapr/streams/click_stream:all_links** on the *MapR Cluster* and writes to a *MapR-DB* table called **/user/mapr/tables/link_aggregates**.
 
 **Aggregator** is one of the many *View Materializer* on the [Reactor Sytem](https://github.com/anicolaspp/reactor/)

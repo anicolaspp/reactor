@@ -6,7 +6,6 @@ object Ops {
   def dbSchema =
     StructType(List(StructField("_id", DataTypes.StringType), StructField("total", DataTypes.IntegerType)))
 
-
   def streamSchema =
     StructType(List(StructField("_id", DataTypes.StringType), StructField("sum", DataTypes.IntegerType)))
 

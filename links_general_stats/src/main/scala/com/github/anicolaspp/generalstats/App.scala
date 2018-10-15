@@ -2,14 +2,12 @@ package com.github.anicolaspp.generalstats
 
 import com.github.anicolaspp.generalstats.conf.Configuration
 import com.github.anicolaspp.generalstats.data.Streamer
+import com.github.anicolaspp.generalstats.ops.Ops._
+import com.mapr.db.spark.sql._
 import com.mapr.db.spark.{MapRDBSpark, _}
 import org.apache.spark.sql._
-import org.apache.spark.sql.types.{DataTypes, StructField, StructType}
 import org.apache.spark.streaming.{Milliseconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
-import com.mapr.db.spark.sql._
-
-import com.github.anicolaspp.generalstats.ops.Ops._
 
 
 object App extends Streamer {
@@ -54,4 +52,3 @@ object App extends Streamer {
     ssc.awaitTermination()
   }
 }
-

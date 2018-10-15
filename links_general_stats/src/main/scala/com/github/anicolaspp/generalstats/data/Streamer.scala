@@ -17,6 +17,5 @@ trait Streamer {
     ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG -> "org.apache.kafka.common.serialization.StringDeserializer",
     ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG -> "org.apache.kafka.common.serialization.StringDeserializer",
     ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG -> "true"
-//    , ConsumerConfig.AUTO_OFFSET_RESET_CONFIG -> "earliest"
   )
 }

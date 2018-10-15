@@ -1,5 +1,6 @@
 package com.github.anicolaspp.generalstats
 
+import com.github.anicolaspp.generalstats.conf.Configuration
 import com.github.anicolaspp.generalstats.data.Streamer
 import com.mapr.db.spark.{MapRDBSpark, _}
 import org.apache.spark.sql._
@@ -8,61 +9,49 @@ import org.apache.spark.streaming.{Milliseconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 import com.mapr.db.spark.sql._
 
+import com.github.anicolaspp.generalstats.ops.Ops._
+
 
 object App extends Streamer {
 
   def main(args: Array[String]): Unit = {
-    val config = new SparkConf().setAppName("general stats")
+    val appConfig = Configuration.parse(args)
+
+    val config = new SparkConf().setAppName(appConfig.appName)
 
     val sc = new SparkContext(config)
-    implicit val ssc: StreamingContext = new StreamingContext(sc, Milliseconds(500))
+    val sparkSession = SparkSession.builder().config(config).getOrCreate()
+    val ssc: StreamingContext = new StreamingContext(sc, Milliseconds(500))
 
-    val messages = getStream("/user/mapr/streams/click_stream:all_links_2")
-
-
-    val sparkSession = new SparkSession(sc)
+    val messages = getStream(appConfig.stream)(ssc)
 
     messages
       .map(_.value())
       .map(MapRDBSpark.newDocument)
-      .map(doc => (doc.getString("path"), 1))
+      .map(doc => (doc.getString(pathCol), 1))
       .reduceByKey(_ + _)
-
       .foreachRDD { rdd =>
         val rowRDD = rdd.map { case (path, sum) => Row(path, sum) }
 
         val rowDF = sparkSession.createDataFrame(rowRDD, streamSchema)
 
-        val fromDBRDD = sparkSession.loadFromMapRDB("/user/mapr/tables/total_counts", dbSchema)
-        //          sc
-        //          .loadFromMapRDB("/user/mapr/tables/total_counts")
-        //          .map(d => (d.getString("_id"), d.getInt("total")))
-        //          .map { case (path, sum) => Row(path, sum) }
-
+        val fromDBDF = sparkSession.loadFromMapRDB(appConfig.tableName, dbSchema)
 
         val joinDF = rowDF
-          .join(fromDBRDD, Seq("_id"), "left_outer")
+          .join(fromDBDF, Seq(idCol), left_outer_join)
           .na
-          .fill(0, Seq("total"))
+          .fill(0, Seq(totalCol))
 
         val finalDF = joinDF
-          .withColumn("value", joinDF("sum") + joinDF("total"))
-          .select("_id", "value")
-          .withColumnRenamed("value", "total")
-        
-        finalDF.saveToMapRDB("/user/mapr/tables/total_counts")
+          .withColumn(valueCol, joinDF(sumCol) + joinDF(totalCol))
+          .select(idCol, valueCol)
+          .withColumnRenamed(valueCol, totalCol)
+
+        finalDF.saveToMapRDB(appConfig.tableName)                                             
       }
 
     ssc.start()
     ssc.awaitTermination()
-  }
-
-  private def dbSchema = {
-    StructType(List(StructField("_id", DataTypes.StringType), StructField("total", DataTypes.IntegerType)))
-  }
-
-  private def streamSchema = {
-    StructType(List(StructField("_id", DataTypes.StringType), StructField("sum", DataTypes.IntegerType)))
   }
 }
 

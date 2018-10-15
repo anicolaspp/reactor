@@ -8,6 +8,8 @@ scalaVersion := "2.11.8"
 
 resolvers += "MapR Releases" at "http://repository.mapr.com/maven"
 
+//resolvers += "MapR Nexus" at "http://repository.mapr.com/nexus/content/repositories/releases"
+
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq(
@@ -20,7 +22,9 @@ libraryDependencies ++= Seq(
   "com.github.scopt" %% "scopt" % "3.7.0",
 
 
-  "org.apache.spark" % "spark-streaming-kafka-0-10-assembly_2.11" % "2.2.1-mapr-1803",
+  "org.ojai" % "ojai-scala" % "2.0.1-mapr-1804",
+
+  "org.apache.spark" % "spark-streaming-kafka-0-9_2.11" % "2.0.1-mapr-1611",
   "com.mapr.db" % "maprdb-spark" % "2.2.1-mapr-1803" % "provided"
 )
 

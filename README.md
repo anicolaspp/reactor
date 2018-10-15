@@ -7,6 +7,7 @@
 - [Click Simulator](https://github.com/anicolaspp/reactor/tree/master/clicksimulator) generates and writes links to the system.
 - View Materializers
   - [Aggregator](https://github.com/anicolaspp/reactor/tree/master/aggregator) materializes global link stats in time window.
+  - [Links General Stats](https://github.com/anicolaspp/reactor/tree/master/links_general_stats) materializes the total counts view for each link.
 
 ## Reactor Overview
 

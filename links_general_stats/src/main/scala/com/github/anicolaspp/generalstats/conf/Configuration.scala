@@ -9,13 +9,13 @@ object Configuration {
   def default: Configuration = DefaultConfiguration
 
   object DefaultConfiguration extends Configuration(
-    "/user/mapr/streams/click_stream:all_links",
-    "/user/mapr/tables/link_aggregates",
-    "Aggregator"
+    "/user/mapr/streams/click_stream:all_links_2",
+    "/user/mapr/tables/total_counts",
+    "general stats"
   )
 
-  private val parser = new scopt.OptionParser[Configuration]("Aggregator") {
-    head("Aggregator")
+  private val parser = new scopt.OptionParser[Configuration]("general stats") {
+    head("general stats")
 
     opt[String]('s', "stream")
       .action((p, config) => config.copy(stream = p))

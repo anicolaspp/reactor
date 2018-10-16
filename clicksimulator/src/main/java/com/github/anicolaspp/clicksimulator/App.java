@@ -18,10 +18,10 @@ public class App {
     
     private static ObjectMapper MAPPER = new ObjectMapper();
     
-    private static String TOPIC = "/user/mapr/streams/click_stream:all_links";
+    private static String TOPIC = "/user/mapr/streams/click_stream:all_links_2";
     
     // ONLY FOR MY RUNNING LOCALLY (DON'T USE IN PRODUCTION)
-    private static ExecutorService executorService = Executors.newWorkStealingPool(1);
+    private static ExecutorService executorService = Executors.newWorkStealingPool(100);
     
     public static void main(String[] args) {
         
@@ -59,7 +59,7 @@ public class App {
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
-        });
+        }, executorService);
     }
     
     private static Integer getNumberOfLinks(String[] args) {

@@ -26,7 +26,7 @@ trait OffsetRepository {
       .toMap
   }
 
-  def saveOffsets(offsetStream: DStream[ConsumerRecord[String, String]], offsetsTable: String) =
+  def saveOffsets[A, B](offsetStream: DStream[ConsumerRecord[A, B]], offsetsTable: String) =
     offsetStream
       .map(record => (s"${record.topic()}-${record.partition()}", record.offset()))
       .saveOffsets(offsetsTable)

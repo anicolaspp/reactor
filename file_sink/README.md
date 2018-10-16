@@ -4,7 +4,9 @@
 
 MapR-ES is able to save the offsets of the message being read so consumers can use the provided offsets. However, for this particular use case, we are going to commit the offsets to MapR-DB only when the corresponding messages have been written the MapR-XD.
 
-Every time **File Sink** stars, it will read the offsets from MapR-DB and then starts consuming MapR-ES from that point on. In this way we guarantee that we are not missing any data in MapR-XD.   
+Every time **File Sink** stars, it reads the offsets from MapR-DB and then starts consuming MapR-ES from that point on. In this way, we guarantee that we are not missing any data in MapR-XD.   
+
+![](./architecture.PNG)
 
 At the same time, files written in MapR-XD have not apparent order or relationship. MapR-DB is use has index for the file system. In this way we can read each file on MapR-XD based on a predefined index. 
 

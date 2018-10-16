@@ -28,3 +28,5 @@ maprcli stream create -path /user/mapr/streams/click_stream:all_links
 ```
 
 ![](./c-gen.jpg) 
+
+**Click Simulator** is one of the modules on the [Reactor Sytem](https://github.com/anicolaspp/reactor/)

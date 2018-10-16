@@ -9,3 +9,5 @@ All the calculation are done on the DataFrame and DataSet APIs since for this pa
 The following image shows how two data flows, one coming from the MapR-ES and the second coming from MapR-DB, join to create the global view that is then save back the MapR-DB.
 
 ![](./architecture.PNG)
+
+**links_general_stats** is one of the many *View Materializer* on the [Reactor Sytem](https://github.com/anicolaspp/reactor/)

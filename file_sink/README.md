@@ -39,3 +39,5 @@ File on MapR-XD can be re-indexed once a new index is introduced by reading all 
 ## General Architecture
 
 ![](architecture.PNG)
+
+**File Sink** is one of the modules on the [Reactor Sytem](https://github.com/anicolaspp/reactor/)

@@ -1,18 +1,16 @@
 package com.github.anicolaspp.sink.data
 
-import com.github.anicolaspp.sink.Predef
+import com.mapr.db.spark.sql._
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.TopicPartition
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.dstream.DStream
 
-import com.mapr.db.spark.sql._
-
 trait OffsetRepository {
 
-  import Predef._
+  import com.github.anicolaspp.sink.streams.Predef._
 
-  def getOffsets(offsetsTable: String)(implicit session: SparkSession) = {
+  def getOffsets(offsetsTable: String)(implicit session: SparkSession): Map[TopicPartition, Long] = {
     import session.implicits._
 
     session.loadFromMapRDB(offsetsTable)

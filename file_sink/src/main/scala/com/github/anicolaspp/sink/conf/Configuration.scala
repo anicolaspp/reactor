@@ -42,7 +42,7 @@ object Configuration {
       .validate { map =>
         if (map.values.exists(_.endsWith("/"))) {
           Left("Paths to tables and file system cannot end with `/` character.")
-        } else if (!map.contains(isHotKey) && !map.contains(timeKey) && !map.contains(baseFilePathKey)) {
+        } else if (!map.contains(isHotKey) || !map.contains(timeKey) || !map.contains(baseFilePathKey)) {
           Left(s"The following keys are required: $isHotKey, $timeKey, $baseFilePathKey")
         } else {
           Right()

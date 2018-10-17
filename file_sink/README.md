@@ -34,7 +34,33 @@ find /tables/index_table --fields _id --where {"$and": [{"$eq":{"time.day":24}},
 ```
 
 File on MapR-XD can be re-indexed once a new index is introduced by reading all files and then applying the indexing strategy.      
+## How to run
 
+In order to get an executable bundle, use run the following command.
+
+```scala
+sbt clean compile assembly
+```
+
+This command will generate a file with the following arguments:
+
+```scala
+assemblyJarName := s"${name.value}-${version.value}.jar"
+```
+
+The resultan file should be
+
+```scala
+file_sinker-1.0.0.jar
+```
+
+This `jar` contains everything needed to run as an Apache Spark application within the MapR cluster. 
+
+Copy the file to your cluster and then run the following command to submit the job to spark. 
+
+```scala
+spark-submit --class "com.github.anicolaspp.sink.App" --deploy-mode client ~/file_sinker-1.0.0.jar 
+```
 
 ## General Architecture
 

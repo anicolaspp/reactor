@@ -15,9 +15,10 @@ object App extends Streamer with OffsetRepository {
 
     implicit val appConfig: Configuration = Configuration.parse(args)
 
-    val config = new SparkConf().setAppName(appConfig.appName)
+    val sparkConfig = new SparkConf().setAppName(appConfig.appName)
 
-    implicit val sparkSession = SparkSession.builder().config(config).getOrCreate()
+    implicit val sparkSession = SparkSession.builder().config(sparkConfig).getOrCreate()
+    
     implicit val ssc = new StreamingContext(sparkSession.sparkContext, Milliseconds(500))
 
     val messages = getStream(appConfig.inputStream, appConfig.offsetsTable)

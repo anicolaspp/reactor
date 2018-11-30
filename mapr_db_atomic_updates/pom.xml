@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.anicolaspp</groupId>
+  <artifactId>mapr_db_atomic_updates</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <properties>
+    <scala.version>2.12.3</scala.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>mapr-maven</id>
+      <url>http://repository.mapr.com/maven</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.mapr.db</groupId>
+      <artifactId>maprdb</artifactId>
+      <version>6.1.0-mapr</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mapr.db</groupId>
+      <artifactId>maprdb-java</artifactId>
+      <version>6.1.0-mapr</version>
+    </dependency>
+  </dependencies>
+
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.github.anicolaspp.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>jar-with-dependencies</descriptorRefs>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <launchers>
+            <launcher>
+              <id>mapr_db_atomic_updates</id>
+              <mainClass>com.github.anicolaspp.App</mainClass>
+            </launcher>
+          </launchers>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

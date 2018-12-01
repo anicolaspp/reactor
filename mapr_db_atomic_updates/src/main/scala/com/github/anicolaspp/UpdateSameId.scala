@@ -7,7 +7,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object UpdateSameId {
 
-  def run(id: String, times: Int)(implicit ec: ExecutionContext, store: DocumentStore): Future[Int] = Future {
+  def run(id: String, times: Int)(implicit ec: ExecutionContext, store: DocumentStore) = Future {
 
     (1 to times).foreach { _ =>
       val mutation = MapRDB

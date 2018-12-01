@@ -3,7 +3,10 @@ package com.github.anicolaspp
 import com.github.anicolaspp.DocumentStore._
 import org.ojai.store.{DocumentStore, DriverManager}
 
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.concurrent.duration._
 
 object App {
 
@@ -17,12 +20,14 @@ object App {
 
     val sessionID = "001"
 
-    UpdateSameIdInParallel
+    val updates = UpdateSameIdInParallel
       .run(sessionID, 10, 20)
-      .foreach { _ =>
+      .map { _ =>
         documentStore.getJsonDocuments().foreach(println)
         documentStore.close()
       }
+
+    Await.ready(updates, 10 minutes)
 
     println("done....")
   }

@@ -21,7 +21,7 @@ object App {
     val sessionID = "001"
 
     val updates = UpdateSameIdInParallel
-      .run(sessionID, 10, 20)
+      .run(sessionID, times = 10, threads = 20)
       .map { _ =>
         documentStore.getJsonDocuments().foreach(println)
         documentStore.close()

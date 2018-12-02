@@ -1,4 +1,4 @@
-package com.github.anicolaspp.maprdb
+package com.github.anicolaspp.maprdb.store
 
 import org.ojai.store.DocumentStore
 

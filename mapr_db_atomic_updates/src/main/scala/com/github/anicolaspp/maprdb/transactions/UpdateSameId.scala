@@ -1,4 +1,4 @@
-package com.github.anicolaspp.maprdb
+package com.github.anicolaspp.maprdb.transactions
 
 import com.mapr.db.MapRDB
 import org.ojai.store.DocumentStore

@@ -1,6 +1,6 @@
-package com.github.anicolaspp
+package com.github.anicolaspp.maprdb
 
-import com.github.anicolaspp.DocumentStore._
+import DocumentStore._
 import org.ojai.store.{DocumentStore, DriverManager}
 
 import scala.concurrent.Await

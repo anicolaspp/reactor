@@ -1,4 +1,4 @@
-package com.github.anicolaspp
+package com.github.anicolaspp.maprdb
 
 import com.mapr.db.MapRDB
 import org.ojai.store.DocumentStore
@@ -23,7 +23,7 @@ object Generator {
           randomSessionId
         }
       }
-        .toStream
+      .toStream
 
     Future.foldLeft(inserts)(List.empty[String])((xs, id) => id :: xs)
 

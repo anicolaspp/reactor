@@ -68,7 +68,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.github.anicolaspp.App</mainClass>
+              <mainClass>com.github.anicolaspp.maprdb.App</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>jar-with-dependencies</descriptorRefs>
@@ -92,7 +92,7 @@
           <launchers>
             <launcher>
               <id>mapr_db_atomic_updates</id>
-              <mainClass>com.github.anicolaspp.App</mainClass>
+              <mainClass>com.github.anicolaspp.maprdb.App</mainClass>
             </launcher>
           </launchers>
         </configuration>

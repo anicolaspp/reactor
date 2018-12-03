@@ -1,11 +1,11 @@
 package com.github.anicolaspp.maprdb
 
-import DocumentStore._
+import com.github.anicolaspp.maprdb.store.DocumentStore._
+import com.github.anicolaspp.maprdb.transactions.UpdateSameIdInParallel
 import org.ojai.store.{DocumentStore, DriverManager}
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.concurrent.duration._
 
 object App {
